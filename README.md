@@ -1652,33 +1652,33 @@ Changes include:
  * Updated/cleaned up OpModes.
   - Updated comments in LinearI2cAddressChange.java example OpMode.
   - Replaced the calls to "setChannelMode" with "setMode" (to match the new of the DcMotor  method).
-  - Removed K9AutoTime.java OpMode.
-  - Added MRGyroTest.java OpMode (demonstrates how to use MR Gyro Sensor).
-  - Added MRRGBExample.java OpMode (demonstrates how to use MR Color Sensor).
-  - Added HTRGBExample.java OpMode (demonstrates how to use HT legacy color sensor).
-  - Added MatrixControllerDemo.java (demonstrates how to use legacy Matrix controller).
- * Updated javadoc documentation.
- * Updated release .apk files for Robot Controller and Driver Station apps.
+- Removed K9AutoTime.java OpMode.
+- Added MRGyroTest.java OpMode (demonstrates how to use MR Gyro Sensor).
+- Added MRRGBExample.java OpMode (demonstrates how to use MR Color Sensor).
+- Added HTRGBExample.java OpMode (demonstrates how to use HT legacy color sensor).
+- Added MatrixControllerDemo.java (demonstrates how to use legacy Matrix controller).
+* Updated javadoc documentation.
+* Updated release .apk files for Robot Controller and Driver Station apps.
 
 ## Release 15.10.06.002
 
- * Added support for Legacy Matrix 9.6V motor/servo controller.
- * Cleaned up build.gradle file.
- * Minor UI and bug fixes for driver station and robot controller apps.
- * Throws error if Ultrasonic sensor (NXT) is not configured for legacy module port 4 or 5.
+* Added support for Legacy Matrix 9.6V motor/servo controller.
+* Cleaned up build.gradle file.
+* Minor UI and bug fixes for driver station and robot controller apps.
+* Throws error if Ultrasonic sensor (NXT) is not configured for legacy module port 4 or 5.
 
 
 ## Release 15.08.03.001
 
- * New user interfaces for FTC Driver Station and FTC Robot Controller apps.
- * An init() method is added to the OpMode class.
-   - For this release, init() is triggered right before the start() method.
-   - Eventually, the init() method will be triggered when the user presses an "INIT" button on driver station.
-   - The init() and loop() methods are now required (i.e., need to be overridden in the user's OpMode).
-   - The start() and stop() methods are optional.
- * A new LinearOpMode class is introduced.
-   - Teams can use the LinearOpMode mode to create a linear (not event driven) program model.
-   - Teams can use blocking statements like Thread.sleep() within a linear OpMode.
- * The API for the Legacy Module and Core Device Interface Module have been updated.
-   - Support for encoders with the Legacy Module is now working.
- * The hardware loop has been updated for better performance.
+* New user interfaces for FTC Driver Station and FTC Robot Controller apps.
+* An init() method is added to the OpMode class.
+  - For this release, init() is triggered right before the start() method.
+  - Eventually, the init() method will be triggered when the user presses an "INIT" button on driver station.
+  - The init() and loop() methods are now required (i.e., need to be overridden in the user's OpMode).
+  - The start() and stop() methods are optional.
+* A new LinearOpMode class is introduced.
+  - Teams can use the LinearOpMode mode to create a linear (not event driven) program model.
+  - Teams can use blocking statements like Thread.sleep() within a linear OpMode.
+* The API for the Legacy Module and Core Device Interface Module have been updated.
+  - Support for encoders with the Legacy Module is now working.
+* The hardware loop has been updated for better performance.

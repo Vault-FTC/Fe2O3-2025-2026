@@ -10,12 +10,12 @@ import org.firstinspires.ftc.teamcode.CommandSystem.Command;
 import org.firstinspires.ftc.teamcode.CommandSystem.Subsystem;
 
 public class Shooter extends Subsystem {
-    boolean spinKicker = true;
+ //   boolean spinKicker = true;
     MotorSpeeds currentSpeed = MotorSpeeds.NEAR;
-    private DcMotorEx kicker;
+//    private DcMotorEx kicker;
     private DcMotorEx shooter;
     public Shooter(HardwareMap hardwareMap) {
-        kicker = hardwareMap.get(DcMotorEx.class, "kicker");
+     //   kicker = hardwareMap.get(DcMotorEx.class, "kicker");
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -43,14 +43,14 @@ public class Shooter extends Subsystem {
         if (shoot) {
             setShooterSpeed(motorSpeed.speed);
             if (Math.abs(shooter.getVelocity(AngleUnit.DEGREES) - currentSpeed.speed) < 100) {
-                toggleKicker(0.5);
+        //        toggleKicker(0.5);
             }
-            else {
-                toggleKicker(0);
-            }
+        //    else {
+        //        toggleKicker(0);
+       //     }
         } else {
             shooter.setVelocity(0);
-            kicker.setPower(0);
+      //      kicker.setPower(0);
         }
     }
 
@@ -64,14 +64,14 @@ public class Shooter extends Subsystem {
         if (shoot) {
             setShooterSpeed(motorSpeed);
             if (Math.abs(shooter.getVelocity(AngleUnit.DEGREES) - motorSpeed) < 100) {
-                toggleKicker(0.5);
+        //        toggleKicker(0.5);
             }
-            else {
-                toggleKicker(0);
-            }
+       //     else {
+        //        toggleKicker(0);
+        //    }
         } else {
             shooter.setVelocity(0);
-            kicker.setPower(0);
+       //     kicker.setPower(0);
         }
     }
 
@@ -83,9 +83,9 @@ public class Shooter extends Subsystem {
     public void setShooterSpeedFromAprilTag() {
 
     }
-    public void toggleKicker(double speed)
+   // public void toggleKicker(double speed)
     {
-        kicker.setPower(speed);
+  //      kicker.setPower(speed);
     }
 //    public void execute(){
 ////        if (Math.abs(getGateError()) > .1){

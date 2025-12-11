@@ -4,16 +4,14 @@ import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Light;
 
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Lights;
 import org.firstinspires.ftc.teamcode.subsystems.MotorSpeeds;
 import org.firstinspires.ftc.teamcode.Autonomous.Location;
-import org.firstinspires.ftc.teamcode.geometry.PoseEstimator;
 
 import org.firstinspires.ftc.teamcode.subsystems.LimeLight;
+import org.firstinspires.ftc.teamcode.subsystems.ServoGate;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.driveallclass;
 
@@ -23,7 +21,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
 
     public LimeLight Limelight;
     Intake intake;
-    boolean last_y;
+    boolean last_triangle;
     boolean last_up;
     boolean last_down;
     boolean shooting;
@@ -32,7 +30,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
 
     Lights light;
 
-    double launchpower = (850);
+    double launchpower = (500);
 
     public void setTargets() {
         Limelight = new LimeLight(hardwareMap, 20);
@@ -42,6 +40,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
     public void runOpMode() {
         intake = new Intake(hardwareMap);
         driveallclass drive = new driveallclass(hardwareMap);
+        ServoGate servoGate = new ServoGate(hardwareMap);
         Shooter launcher = new Shooter(hardwareMap);
         MotorSpeeds launchpower = MotorSpeeds.NEAR;
         setTargets();
@@ -60,28 +59,26 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                 drive.resetHeading(0);
             }
 
-            if (!last_y && gamepad1.y) {
+            if (!last_triangle && gamepad1.y) {
                 shooting = !shooting;
             }
-            last_y = gamepad1.y;
+            last_triangle = gamepad1.y;
 
             if (gamepad1.x) {
-                intake.spinKicker(0.75);
                 intake.spinIntake(0.95);
             } else if (gamepad1.left_bumper) {
                 intake.spinIntake(0.95);
-                intake.spinKicker(-0.95);
+
             } else if (gamepad1.b) {
                 intake.spinIntake(-0.95);
-                intake.spinKicker(-0.75);
             } else {
-                intake.spinKicker(0);
                 intake.spinIntake(0);
             }
 
 
             if (gamepad1.right_bumper) {
                 joystick_rx = joystick_rx - Limelight.getTx() / 1.5;
+                servoGate.OpenGate();
                 LLResultTypes.FiducialResult result = Limelight.getResult();
                 if (result == null) {
 
@@ -106,15 +103,15 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                 }
             } else {
                 if (shooting) {
-                    launcher.setShooterSpeed(this.launchpower);
+                    launcher.setShooterSpeed(-500);
                 } else {
                     launcher.setShooterSpeed(MotorSpeeds.ZERO.speed);
                 }
 
                 if (gamepad1.x) {
-                    launcher.toggleKicker(0.5);
+                    intake.spinIntake(0.8);
                 } else {
-                    launcher.toggleKicker(0);
+                    intake.spinIntake(0);
                 }
             }
 // A bunch of comments are underneath this but I was tired of seeing them.

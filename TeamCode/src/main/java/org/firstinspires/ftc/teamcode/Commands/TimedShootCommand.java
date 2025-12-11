@@ -34,10 +34,10 @@ public class TimedShootCommand extends Command {
         double elapsed = timer.milliseconds() - startTime;
         if (elapsed > 2000) {
             intake.spinIntake(0.75);
-            intake.spinKicker(0.75);
+   //         intake.spinKicker(0.75);
         } else {
             intake.spinIntake(0);
-            intake.spinKicker(0);
+    //        intake.spinKicker(0);
             shooter.execute(true, motorSpeed.speed);
         }
         telemetry.addData("Running", "Shoot Command");
@@ -51,7 +51,7 @@ public class TimedShootCommand extends Command {
     public void end(boolean interrupted) {
         shooter.setShooterSpeed(MotorSpeeds.ZERO.speed);
         intake.spinIntake(0);
-        intake.spinKicker(0);
+    //    intake.spinKicker(0);
     }
 
 }
