@@ -89,7 +89,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
 //                    this.launchpower = launcher.distanceToSpeed(range);
                     telemetry.addData("fff", range);
                     if (result.getCameraPoseTargetSpace().getPosition().x < 67) {
-                        light.setColor(green);
+//                        light.setColor(green);
                         if (result.getCameraPoseTargetSpace().getPosition().z <= -2.5) {
                             this.launchpower = 1000;
                         }
@@ -98,7 +98,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                         }
                         launcher.execute(true, this.launchpower);
                     } else {
-                        light.setColor(red);
+//                        light.setColor(red);
                     }
                 }
             } else {
