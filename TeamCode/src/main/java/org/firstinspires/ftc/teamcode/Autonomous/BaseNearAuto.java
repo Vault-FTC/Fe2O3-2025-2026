@@ -50,8 +50,8 @@ public class BaseNearAuto extends LinearOpMode {
 
         SequentialCommandGroup auto = SequentialCommandGroup.getBuilder()
                 .add(new DriveToCommand(drive, launchPosition, telemetry))
-                .add(new LimeLightTurnCommand(drive, LimeLight, telemetry))
-                .add(new TimedShootCommand(shooter, intake, 3, telemetry, MotorSpeeds.AUTO_NEAR))
+//                .add(new LimeLightTurnCommand(drive, LimeLight, telemetry))
+                .add(new TimedShootCommand(shooter, intake, 3, telemetry, MotorSpeeds.ONE_TWENTIETH))
                 .add(ParallelCommandGroup.getBuilder()
                         .add(new IntakeCommand(intake, 2, telemetry))
                         .add(new DriveToCommand(drive, collectFirstRowArtifacts, telemetry))

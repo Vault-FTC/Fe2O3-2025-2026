@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
@@ -19,6 +20,7 @@ public class Shooter extends Subsystem {
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
         shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(800, 0, 0,0));
         shooter.setPower(1.0);
         shooter.setVelocity(0, AngleUnit.DEGREES);
@@ -63,12 +65,6 @@ public class Shooter extends Subsystem {
     public void execute(boolean shoot, double motorSpeed) {
         if (shoot) {
             setShooterSpeed(motorSpeed);
-            if (Math.abs(shooter.getVelocity(AngleUnit.DEGREES) - motorSpeed) < 100) {
-        //        toggleKicker(0.5);
-            }
-       //     else {
-        //        toggleKicker(0);
-        //    }
         } else {
             shooter.setVelocity(0);
        //     kicker.setPower(0);

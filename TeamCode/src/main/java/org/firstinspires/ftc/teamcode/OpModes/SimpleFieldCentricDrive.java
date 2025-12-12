@@ -30,7 +30,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
 
     Lights light;
 
-    double launchpower = (500);
+    double launchpower = (0.5);
 
     public void setTargets() {
         Limelight = new LimeLight(hardwareMap, 20);
@@ -89,31 +89,34 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
 //                    this.launchpower = launcher.distanceToSpeed(range);
                     telemetry.addData("fff", range);
                     if (result.getCameraPoseTargetSpace().getPosition().x < 67) {
+                        gamepad1.rumble(1000);
 //                        light.setColor(green);
                         if (result.getCameraPoseTargetSpace().getPosition().z <= -2.5) {
-                            this.launchpower = 1000;
+                            this.launchpower = 25;
                         }
                         else {
-                            this.launchpower = 850;
+                            this.launchpower = 15;
                         }
                         launcher.execute(true, this.launchpower);
                     } else {
 //                        light.setColor(red);
                     }
                 }
-            } else {
-                if (shooting) {
-                    launcher.setShooterSpeed(-500);
-                } else {
-                    launcher.setShooterSpeed(MotorSpeeds.ZERO.speed);
-                }
-
-                if (gamepad1.x) {
-                    intake.spinIntake(0.8);
-                } else {
-                    intake.spinIntake(0);
-                }
             }
+
+//            else {
+//                if (shooting) {
+//                    launcher.setShooterSpeed(-500);
+//                } else {
+//                    launcher.setShooterSpeed(MotorSpeeds.ZERO.speed);
+//                }
+//
+//                if (gamepad1.x) {
+//                    intake.spinIntake(0.8);
+//                } else {
+//                    intake.spinIntake(0);
+//                }
+//            }
 // A bunch of comments are underneath this but I was tired of seeing them.
 //            if (!last_dpad_up && gamepad1.dpad_up) {
 //                int newVal = launchpower.ordinal() + 1;
