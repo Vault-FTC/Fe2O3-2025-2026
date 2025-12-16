@@ -7,7 +7,7 @@ public enum MotorSpeeds {
     FAR(0),
 //    THREE_EIGHTS(1000),
 AUTO_NEAR(400),
-    ONE_TWENTIETH(800),
+    ONE_TWENTIETH(850),
 
     REVERSE(-900),
     ONE_TENTH(400),

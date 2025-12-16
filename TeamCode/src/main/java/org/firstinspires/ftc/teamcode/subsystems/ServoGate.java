@@ -15,6 +15,6 @@ public class ServoGate extends Subsystem {
         servo.setPosition(0.5);
     }
     public void openGate()  {
-        servo.setPosition(0);
+        servo.setPosition(1);
     }
 }

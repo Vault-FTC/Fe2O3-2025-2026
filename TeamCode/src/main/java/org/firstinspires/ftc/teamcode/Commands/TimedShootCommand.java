@@ -1,22 +1,27 @@
 package org.firstinspires.ftc.teamcode.Commands;
 
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.CommandSystem.Command;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.MotorSpeeds;
+import org.firstinspires.ftc.teamcode.subsystems.ServoGate;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 
 public class TimedShootCommand extends Command {
     Telemetry telemetry;
     Shooter shooter;
     Intake intake;
+    private final ServoGate servoGate;
     MotorSpeeds motorSpeed;
     private final double durationMs;
     private double startTime;
 
-    public TimedShootCommand(Shooter shooter, Intake intake, double durationSeconds, Telemetry telemetry, MotorSpeeds motorSpeed) {
+    public TimedShootCommand(Shooter shooter, Intake intake, double durationSeconds, Telemetry telemetry, MotorSpeeds motorSpeed, ServoGate servoGate) {
         this.shooter = shooter;
         this.intake = intake;
+        this.servoGate = servoGate;
         this.telemetry = telemetry;
         this.motorSpeed = motorSpeed;
         this.durationMs = durationSeconds * 1000;
@@ -32,8 +37,9 @@ public class TimedShootCommand extends Command {
     @Override
     public void execute() {
         double elapsed = timer.milliseconds() - startTime;
+        servoGate.openGate();
         if (elapsed > 2000) {
-            intake.spinIntake(0.75);
+            intake.spinIntake(0.95);
    //         intake.spinKicker(0.75);
         } else {
             intake.spinIntake(0);

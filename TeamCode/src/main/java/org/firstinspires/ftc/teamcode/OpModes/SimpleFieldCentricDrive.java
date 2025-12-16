@@ -66,18 +66,17 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
 // wooot
             if (gamepad1.x) {
                 intake.spinIntake(0.95);
-                launcher.execute(true, MotorSpeeds.REVERSE);
+                servoGate.openGate();
             } else if (gamepad1.left_bumper) {
                 intake.spinIntake(0.95);
-                servoGate.closeGate();
 
             } else if (gamepad1.b) {
                 intake.spinIntake(-0.95);
-                servoGate.openGate();
+                launcher.execute(true, MotorSpeeds.REVERSE);
             } else {
                 intake.spinIntake(0);
                 launcher.execute(true, 0);
-                servoGate.openGate();
+                servoGate.closeGate();
             }
 
 
