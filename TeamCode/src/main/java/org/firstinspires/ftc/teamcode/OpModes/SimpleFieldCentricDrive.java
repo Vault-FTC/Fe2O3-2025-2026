@@ -30,7 +30,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
 
     Lights light;
 
-    double launchpower = (0.5);
+    double launchpower = (0);
 
     public void setTargets() {
         Limelight = new LimeLight(hardwareMap, 20);
@@ -66,19 +66,23 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
 
             if (gamepad1.x) {
                 intake.spinIntake(0.95);
+                launcher.execute(true, MotorSpeeds.REVERSE);
             } else if (gamepad1.left_bumper) {
                 intake.spinIntake(0.95);
+                servoGate.closeGate();
 
             } else if (gamepad1.b) {
                 intake.spinIntake(-0.95);
+                servoGate.openGate();
             } else {
                 intake.spinIntake(0);
+                launcher.execute(true, 0);
+                servoGate.openGate();
             }
 
 
             if (gamepad1.right_bumper) {
-                joystick_rx = joystick_rx - Limelight.getTx() / 1.5;
-                servoGate.OpenGate();
+                joystick_rx = joystick_rx - Limelight.getTx() / 1.75;
                 LLResultTypes.FiducialResult result = Limelight.getResult();
                 if (result == null) {
 
@@ -91,17 +95,20 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                     if (result.getCameraPoseTargetSpace().getPosition().x < 67) {
                         gamepad1.rumble(1000);
 //                        light.setColor(green);
-                        if (result.getCameraPoseTargetSpace().getPosition().z <= -2.5) {
-                            this.launchpower = 25;
+                        if (result.getCameraPoseTargetSpace().getPosition().z >= -2.5) {
+                            this.launchpower = 900;
                         }
                         else {
-                            this.launchpower = 15;
+                            this.launchpower = 1300;
                         }
                         launcher.execute(true, this.launchpower);
                     } else {
 //                        light.setColor(red);
                     }
                 }
+            }
+            else {
+                launcher.execute(false, 0);
             }
 
 //            else {

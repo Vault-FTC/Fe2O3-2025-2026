@@ -1,24 +1,20 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.CommandSystem.Subsystem;
 
 public class ServoGate extends Subsystem {
-    private Servo dweeb;
+    private Servo servo;
    //
     public ServoGate(HardwareMap hardwareMap) {
-        dweeb = hardwareMap.get(Servo.class, "servos");
-   //     kicker = hardwareMap.get(DcMotor.class, "kicker");
+        servo = hardwareMap.get(Servo.class, "servo");
     }
     public void closeGate() {
-        dweeb.setPosition(0);
+        servo.setPosition(0.5);
     }
- //   public void spinKicker(double power) {
-   //     kicker.setPower(power);
-    public void OpenGate()  {
-   dweeb.setPosition(1);    
+    public void openGate()  {
+        servo.setPosition(0);
     }
 }
