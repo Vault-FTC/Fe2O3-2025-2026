@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.driveallclass;
 
 
+// ALL SHOOTER SPEEDS ARE IN TICKS/SECOND. DO NOT, I REPEAT DO NOT, USE DEGREES/SECOND
 @TeleOp(name = "TeleOp Blue", group = "Teleop")
 public class SimpleFieldCentricDrive extends LinearOpMode {
 
@@ -63,7 +64,6 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                 shooting = !shooting;
             }
             last_triangle = gamepad1.y;
-// wooot
             if (gamepad1.x) {
                 intake.spinIntake(0.95);
                 servoGate.openGate();
@@ -75,7 +75,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                 launcher.execute(true, -900);
             } else {
                 intake.spinIntake(0);
-                launcher.execute(true, 0);
+                launcher.setPower(0);
                 servoGate.closeGate();
             }
 
