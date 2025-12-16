@@ -63,7 +63,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                 shooting = !shooting;
             }
             last_triangle = gamepad1.y;
-
+// wooot
             if (gamepad1.x) {
                 intake.spinIntake(0.95);
                 launcher.execute(true, MotorSpeeds.REVERSE);
