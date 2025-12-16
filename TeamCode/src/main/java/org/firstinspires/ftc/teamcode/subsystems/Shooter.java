@@ -15,13 +15,13 @@ public class Shooter extends Subsystem {
     MotorSpeeds currentSpeed = MotorSpeeds.NEAR;
 //    private DcMotorEx kicker;
     private DcMotorEx shooter;
+    PIDFCoefficients pidfCoefficients = new PIDFCoefficients(20.0004, 0, 0, 17.9967);
     public Shooter(HardwareMap hardwareMap) {
      //   kicker = hardwareMap.get(DcMotorEx.class, "kicker");
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooter.setDirection(DcMotorSimple.Direction.REVERSE);
-        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(800, 0, 0,0));
+        shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         shooter.setPower(1.0);
         shooter.setVelocity(0, AngleUnit.DEGREES);
     }
@@ -41,20 +41,14 @@ public class Shooter extends Subsystem {
 //    }
 
 
-    public void execute(boolean shoot, MotorSpeeds motorSpeed) {
-        if (shoot) {
-            setShooterSpeed(motorSpeed.speed);
-            if (Math.abs(shooter.getVelocity(AngleUnit.DEGREES) - currentSpeed.speed) < 100) {
-        //        toggleKicker(0.5);
-            }
-        //    else {
-        //        toggleKicker(0);
-       //     }
-        } else {
-            shooter.setVelocity(0);
-      //      kicker.setPower(0);
-        }
-    }
+//    public void execute(boolean shoot, MotorSpeeds motorSpeed) {
+//        if (shoot) {
+//
+//        } else {
+//            shooter.setVelocity(0);
+//      //      kicker.setPower(0);
+//        }
+//    }
 
     public double distanceToSpeed(double distanceCm)
     {
@@ -64,7 +58,7 @@ public class Shooter extends Subsystem {
 
     public void execute(boolean shoot, double motorSpeed) {
         if (shoot) {
-            setShooterSpeed(motorSpeed);
+            shooter.setVelocity(motorSpeed);
         } else {
             shooter.setVelocity(0);
        //     kicker.setPower(0);

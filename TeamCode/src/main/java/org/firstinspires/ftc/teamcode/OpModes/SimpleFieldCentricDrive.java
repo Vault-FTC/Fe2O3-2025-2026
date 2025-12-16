@@ -72,7 +72,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
 
             } else if (gamepad1.b) {
                 intake.spinIntake(-0.95);
-                launcher.execute(true, MotorSpeeds.REVERSE);
+                launcher.execute(true, -900);
             } else {
                 intake.spinIntake(0);
                 launcher.execute(true, 0);
@@ -98,7 +98,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                             this.launchpower = 900;
                         }
                         else {
-                            this.launchpower = 1300;
+                            this.launchpower = 1200;
                         }
                         launcher.execute(true, this.launchpower);
                     } else {

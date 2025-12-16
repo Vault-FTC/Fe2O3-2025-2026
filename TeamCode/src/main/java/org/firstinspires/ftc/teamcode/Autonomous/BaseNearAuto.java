@@ -27,7 +27,7 @@ public class BaseNearAuto extends LinearOpMode {
     ServoGate servoGate;
     Location launchPosition = new Location(-110, 10, 0);
     Location collectFirstRowArtifacts = new Location(-70, -60, 43);
-    Location hitGate = new Location(-70, -110, -48);
+    Location hitGate = new Location(-70, -100, -48);
     Location prepareSecondRowArtifacts = new Location(-145,-80, 43);
     Location collectSecondRowArtifacts = new Location(-88, -135, 43);
     Location prepareCollectThirdRowArtifacts = new Location(-184,-124, 43);
