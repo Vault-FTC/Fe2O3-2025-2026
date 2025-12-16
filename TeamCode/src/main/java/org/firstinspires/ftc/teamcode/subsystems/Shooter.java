@@ -26,14 +26,6 @@ public class Shooter extends Subsystem {
         shooter.setVelocity(0, AngleUnit.DEGREES);
     }
 
-//    public void shoot()
-//    {
-//        shooter.setVelocity();
-//    }
-//    public void intake()
-//    {
-//
-//    }
 
 //    public void setShooterSpeed(MotorSpeeds speed){
 //        currentSpeed = speed;
