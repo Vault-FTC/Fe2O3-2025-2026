@@ -15,6 +15,9 @@ public class Shooter extends Subsystem {
     MotorSpeeds currentSpeed = MotorSpeeds.NEAR;
 //    private DcMotorEx kicker;
     private DcMotorEx shooter;
+    double lastTime = 0;
+    double lastTargetVelocity = 0;
+    double kA = 0.0005; // tune this experimentally
     PIDFCoefficients pidfCoefficients = new PIDFCoefficients(20.0004, 0, 0, 17.9967);
     public Shooter(HardwareMap hardwareMap) {
      //   kicker = hardwareMap.get(DcMotorEx.class, "kicker");
@@ -44,6 +47,29 @@ public class Shooter extends Subsystem {
     public void setShooterSpeed(double speed){
         //currentSpeed = speed;
         shooter.setVelocity(speed);
+    }
+    public void setShooterVelocityDynamic(double targetVelocity) {
+        double currentVelocity = shooter.getVelocity();
+        double currentTime = System.nanoTime() / 1e9; // seconds
+        double dt = currentTime - lastTime;
+        if (dt <= 0) dt = 0.001;
+
+        // Approximate acceleration
+        double acceleration = (targetVelocity - lastTargetVelocity) / dt;
+
+        // Base PIDF power (FTC PIDF takes care of P/I/D/F automatically)
+        double pidfPower = targetVelocity;
+
+        // Add acceleration feedforward term
+        double extraPower = kA * acceleration;
+
+        // Combine
+        double finalVelocity = pidfPower + extraPower;
+
+        shooter.setVelocity(finalVelocity);
+
+        lastTargetVelocity = targetVelocity;
+        lastTime = currentTime;
     }
     public double getShooterVelocity()
     {
