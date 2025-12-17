@@ -1,18 +1,20 @@
 package org.firstinspires.ftc.teamcode.geometry;
 
+import org.firstinspires.ftc.teamcode.PurePursuit.Pose2d;
+
 public class RobotVelocity2D {
     TimeStamp timeStamp = new TimeStamp();
-    Pose2D lastPose; // Think of this as a timestamp to compare previous times
+    Pose2d lastPose; // Think of this as a timestamp to compare previous times
 
     Vector2D translationVel; // m / s
     double angularVel; // Rad / s
 
-    public RobotVelocity2D(Pose2D currentPose){
+    public RobotVelocity2D(Pose2d currentPose){
         this.lastPose = currentPose;
         timeStamp.reset();
     }
 
-    public RobotVelocity2D(Pose2D lastPose, Vector2D translationVel, double angularVel){
+    public RobotVelocity2D(Pose2d lastPose, Vector2D translationVel, double angularVel){
         this.lastPose = lastPose.copy();
         this.translationVel = translationVel.copy();
         this.angularVel = angularVel;
@@ -38,7 +40,7 @@ public class RobotVelocity2D {
      * NOTE: If the robot moves more than 180 deg between runs of this function, the calculation will likely be wrong.
      * Call this in periodic, or not at all.
      */
-    public void updateVel(Pose2D currentPose){
+    public void updateVel(Pose2d currentPose){
         double dt = timeStamp.getDt();
         double x_change = currentPose.getX() - lastPose.getX();
         double y_change = currentPose.getY() - lastPose.getY();
@@ -46,7 +48,7 @@ public class RobotVelocity2D {
 
         // angles kinda suck so this is the best way to represent the cutoffs from 2PI to 0.
         double rot_change =
-                (currentPose.getHeading().getRad() - lastPose.getHeading().getRad()
+                (currentPose.getHeading().getAngleRadians() - lastPose.getHeading().getAngleRadians()
                 + Math.PI) % (2 * Math.PI) - Math.PI;
         angularVel = (rot_change < -Math.PI ? rot_change + 2 * Math.PI : rot_change) / dt;
     }
