@@ -14,11 +14,11 @@ public class TimedShootCommand extends Command {
     Shooter shooter;
     Intake intake;
     private final ServoGate servoGate;
-    MotorSpeeds motorSpeed;
+    double motorSpeed;
     private final double durationMs;
     private double startTime;
 
-    public TimedShootCommand(Shooter shooter, Intake intake, double durationSeconds, Telemetry telemetry, MotorSpeeds motorSpeed, ServoGate servoGate) {
+    public TimedShootCommand(Shooter shooter, Intake intake, double durationSeconds, Telemetry telemetry, double motorSpeed, ServoGate servoGate) {
         this.shooter = shooter;
         this.intake = intake;
         this.servoGate = servoGate;
@@ -30,7 +30,7 @@ public class TimedShootCommand extends Command {
 
     @Override
     public void initialize() {
-        shooter.setShooterSpeed(motorSpeed.speed);
+        shooter.setShooterSpeed(motorSpeed);
         timer.reset();
         startTime = timer.milliseconds();
     }
@@ -44,7 +44,7 @@ public class TimedShootCommand extends Command {
         } else {
             intake.spinIntake(0);
     //        intake.spinKicker(0);
-            shooter.execute(true, motorSpeed.speed);
+            shooter.execute(true, motorSpeed);
         }
         telemetry.addData("Running", "Shoot Command");
     }

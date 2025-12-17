@@ -40,6 +40,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
     @Override
     public void runOpMode() {
         intake = new Intake(hardwareMap);
+        light = new Lights(hardwareMap);
         driveallclass drive = new driveallclass(hardwareMap);
         ServoGate servoGate = new ServoGate(hardwareMap);
         Shooter launcher = new Shooter(hardwareMap);
@@ -65,7 +66,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
             }
             last_triangle = gamepad1.y;
             if (gamepad1.x) {
-                intake.spinIntake(0.95);
+                intake.spinIntake(0.7);
                 servoGate.openGate();
             } else if (gamepad1.left_bumper) {
                 intake.spinIntake(0.95);
@@ -81,28 +82,28 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
 
 
             if (gamepad1.right_bumper) {
-                joystick_rx = joystick_rx - Limelight.getTx() / 1.75;
                 LLResultTypes.FiducialResult result = Limelight.getResult();
                 if (result == null) {
 
                 } else {
+                    joystick_rx = joystick_rx - Limelight.getTx() / 1.75;
+                    gamepad1.rumble(1000);
                     double range = Math.abs(result.getCameraPoseTargetSpace().getPosition().z);
                     // launchpower = 0.4 + range / 4;
                     // was 0.3
 //                    this.launchpower = launcher.distanceToSpeed(range);
                     telemetry.addData("fff", range);
                     if (result.getCameraPoseTargetSpace().getPosition().x < 67) {
-                        gamepad1.rumble(1000);
-//                        light.setColor(green);
+                        light.setColor(green);
                         if (result.getCameraPoseTargetSpace().getPosition().z >= -2.5) {
-                            this.launchpower = 900;
+                            this.launchpower = 1300;
                         }
                         else {
-                            this.launchpower = 1200;
+                            this.launchpower = 1700;
                         }
                         launcher.execute(true, this.launchpower);
                     } else {
-//                        light.setColor(red);
+                        light.setColor(red);
                     }
                 }
             }

@@ -33,11 +33,9 @@ public class ShootCommand extends Command {
     public void execute() {
         double elapsed = timer.milliseconds() - startTime;
         if (elapsed > 2000) {
-            intake.spinIntake(0.75);
-   //         intake.spinKicker(0.75);
+            intake.spinIntake(0.85);
         } else {
             intake.spinIntake(0);
-   //         intake.spinKicker(0);
             shooter.execute(true, motorSpeed.speed);
         }
         telemetry.addData("Running", "Shoot Command");

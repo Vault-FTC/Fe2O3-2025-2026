@@ -22,8 +22,6 @@ public class Shooter extends Subsystem {
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooter.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
-        shooter.setPower(1.0);
-        shooter.setVelocity(0);
     }
     public double distanceToSpeed(double distanceCm)
     {
@@ -49,7 +47,7 @@ public class Shooter extends Subsystem {
     }
     public double getShooterVelocity()
     {
-        return shooter.getVelocity(AngleUnit.DEGREES);
+        return shooter.getVelocity();
     }
 }
 
