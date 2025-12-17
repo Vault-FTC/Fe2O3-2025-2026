@@ -17,8 +17,11 @@ public class TimedShootCommand extends Command {
     double motorSpeed;
     private final double durationMs;
     private double startTime;
-
-    public TimedShootCommand(Shooter shooter, Intake intake, double durationSeconds, Telemetry telemetry, double motorSpeed, ServoGate servoGate) {
+    double feedPulseInterval = 0.1; //seconds for feed/pause
+    double lastFeedToggleTime = 0;
+    boolean feeding = false;
+    double currentTime = 0;
+    public TimedShootCommand(Shooter shooter, Intake intake, double durationSeconds, Telemetry telemetry, double motorSpeed, ServoGate servoGate, double time) {
         this.shooter = shooter;
         this.intake = intake;
         this.servoGate = servoGate;
@@ -39,7 +42,16 @@ public class TimedShootCommand extends Command {
         double elapsed = timer.milliseconds() - startTime;
         servoGate.openGate();
         if (elapsed > 2000) {
-            intake.spinIntake(0.95);
+            if (currentTime - lastFeedToggleTime > feedPulseInterval) {
+                feeding = !feeding;
+                if (feeding) {
+                    intake.spinIntake(0.7);
+                } else{
+                    intake.spinIntake(0);
+                }
+                lastFeedToggleTime = currentTime;
+            }
+            servoGate.openGate();
    //         intake.spinKicker(0.75);
         } else {
             intake.spinIntake(0);

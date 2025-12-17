@@ -26,6 +26,9 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
     boolean last_up;
     boolean last_down;
     boolean shooting;
+    double feedPulseInterval = 0.05; //seconds for feed/pause
+    double lastFeedToggleTime = 0;
+    boolean feeding = false;
     RevBlinkinLedDriver.BlinkinPattern green;
     RevBlinkinLedDriver.BlinkinPattern red;
 
@@ -52,6 +55,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
         waitForStart();
         // poseEstimator.update();
         while (opModeIsActive()) {
+            double currentTime = getRuntime();
 
             double joystick_y = gamepad1.left_stick_y; // Forward/backward
             double joystick_x = gamepad1.left_stick_x;  // Strafe left/right
@@ -66,7 +70,16 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
             }
             last_triangle = gamepad1.y;
             if (gamepad1.x) {
-                intake.spinIntake(0.7);
+                intake.spinIntake(0.675);
+                if (currentTime  - lastFeedToggleTime > feedPulseInterval) {
+                    feeding = !feeding;
+                    if (feeding) {
+                        intake.spinIntake(0.7);
+                    } else{
+                        intake.spinIntake(0);
+                    }
+                    lastFeedToggleTime = currentTime;
+                }
                 servoGate.openGate();
             } else if (gamepad1.left_bumper) {
                 intake.spinIntake(0.95);
@@ -96,12 +109,14 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                     if (result.getCameraPoseTargetSpace().getPosition().x < 67) {
                         light.setColor(green);
                         if (result.getCameraPoseTargetSpace().getPosition().z >= -2.5) {
-                            this.launchpower = 1300;
+                            this.launchpower = 1400;
+                            feedPulseInterval = 0.1;
                         }
                         else {
-                            this.launchpower = 1700;
+                            this.launchpower = 1800;
+                            feedPulseInterval = 0.15;
                         }
-                        launcher.execute(true, this.launchpower);
+                        launcher.setShooterVelocityDynamic(this.launchpower);
                     } else {
                         light.setColor(red);
                     }

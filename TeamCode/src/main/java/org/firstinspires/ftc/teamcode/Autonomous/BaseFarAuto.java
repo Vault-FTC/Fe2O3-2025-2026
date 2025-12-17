@@ -24,7 +24,7 @@ public class BaseFarAuto extends BaseNearAuto {
     Location parkPosition = new Location(88, -10, 95);
     CommandScheduler scheduler = CommandScheduler.getInstance();
     Command auto;
-
+    double time;
     void setTargets() {
 
     }
@@ -42,7 +42,7 @@ public class BaseFarAuto extends BaseNearAuto {
                 .add(new DriveToCommand(drive, doNotHitWall, telemetry))
                 .add(new DriveToCommand(drive, farShootPosition, telemetry))
 //                .add(new LimeLightTurnCommand(drive,LimeLight, telemetry))
-                .add(new TimedShootCommand(shooter, intake, 4, telemetry, 1500, servoGate))
+                .add(new TimedShootCommand(shooter, intake, 4, telemetry, 1500, servoGate, time))
                 .add(new DriveToCommand(drive, firstPickupPosition, telemetry))
                 .add(ParallelCommandGroup.getBuilder()
                         .add(new IntakeCommand(intake, 3, telemetry, servoGate))
@@ -51,7 +51,7 @@ public class BaseFarAuto extends BaseNearAuto {
                 )
                 .add(new DriveToCommand(drive, farShootPosition, telemetry))
 //                .add(new LimeLightTurnCommand(drive,LimeLight, telemetry))
-                .add(new TimedShootCommand(shooter, intake, 4, telemetry, 1500, servoGate))
+                .add(new TimedShootCommand(shooter, intake, 4, telemetry, 1500, servoGate, time))
                 .add(new DriveToCommand(drive, parkPosition, telemetry))
                 .build();
 
@@ -59,6 +59,7 @@ public class BaseFarAuto extends BaseNearAuto {
 
         auto.schedule();
         while(opModeIsActive()) {
+            time = getRuntime();
             scheduler.run();
             telemetry.update();
         }

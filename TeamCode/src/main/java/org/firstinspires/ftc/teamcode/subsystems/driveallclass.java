@@ -143,7 +143,7 @@ public class driveallclass extends Subsystem {
 //    }
 
     public void driveToPosition(Location target, double turnVal, Telemetry telemetry) {
-        double p = 0.008;
+        double p = 0.006;
         double p_rotation = 0.03;
         double strafe = (target.Strafe - poseEstimator.getGlobalX());
         double forward = (-target.Forward + poseEstimator.getGlobalY());
