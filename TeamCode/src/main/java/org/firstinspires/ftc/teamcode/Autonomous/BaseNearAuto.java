@@ -27,7 +27,8 @@ public class BaseNearAuto extends LinearOpMode {
     ServoGate servoGate;
     Location launchPosition = new Location(-110, 10, 0);
     Location collectFirstRowArtifacts = new Location(-70, -60, 43);
-    Location hitGate = new Location(-65, -105, -48);
+    Location hitGate = new Location(-60, -105, -48);
+    Location hitGate2 = new Location(-70, -110, -48);
     Location prepareSecondRowArtifacts = new Location(-145,-80, 43);
     Location collectSecondRowArtifacts = new Location(-88, -135, 43);
     Location prepareCollectThirdRowArtifacts = new Location(-184,-124, 43);
@@ -65,7 +66,6 @@ public class BaseNearAuto extends LinearOpMode {
                         .build()
                 )
                 .add(new DriveToCommand(drive, hitGate, telemetry))
-                .add(new DriveToCommand(drive, collectFirstRowArtifacts, telemetry))
                 .add(new DriveToCommand(drive, launchPosition, telemetry))
 //                .add(new LimeLightTurnCommand(drive,LimeLight,telemetry))
                 .add(new TimedShootCommand(shooter, intake, 3, telemetry, 1350, servoGate, time))
@@ -76,21 +76,20 @@ public class BaseNearAuto extends LinearOpMode {
                         .build()
                 )
                 .add(new DriveToCommand(drive, prepareSecondRowArtifacts, telemetry))
-                .add(new DriveToCommand(drive, hitGate, telemetry))
+                .add(new DriveToCommand(drive, hitGate2, telemetry))
                 .add(new DriveToCommand(drive, launchPosition, telemetry))
 //                .add(new LimeLightTurnCommand(drive,LimeLight,telemetry))
                 .add(new TimedShootCommand(shooter, intake, 3, telemetry, 1350, servoGate, time))
 
-                .add(new DriveToCommand(drive, prepareCollectThirdRowArtifacts, telemetry))
-                .add(ParallelCommandGroup.getBuilder()
-                        .add(new IntakeCommand(intake, 2, telemetry, servoGate))
-                        .add(new DriveToCommand(drive, collectionThirdRowArtifacts, telemetry))
-                        .build()
-                )
-
-                .add(new DriveToCommand(drive, lastLaunchPosition, telemetry))
-                .add(new TimedShootCommand(shooter, intake, 2.5, telemetry, 1350, servoGate, time))
-
+//                .add(new DriveToCommand(drive, prepareCollectThirdRowArtifacts, telemetry))
+//                .add(ParallelCommandGroup.getBuilder()
+//                        .add(new IntakeCommand(intake, 2, telemetry, servoGate))
+//                        .add(new DriveToCommand(drive, collectionThirdRowArtifacts, telemetry))
+//                        .build()
+//                )
+//
+//                .add(new DriveToCommand(drive, lastLaunchPosition, telemetry))
+//                .add(new TimedShootCommand(shooter, intake, 2.5, telemetry, 1350, servoGate, time))
                 .add(new DriveToCommand(drive, leaveZonePosition, telemetry))
                 .build();
 

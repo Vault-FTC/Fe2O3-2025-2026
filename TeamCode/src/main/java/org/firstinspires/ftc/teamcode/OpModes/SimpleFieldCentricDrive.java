@@ -47,7 +47,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
         driveallclass drive = new driveallclass(hardwareMap);
         ServoGate servoGate = new ServoGate(hardwareMap);
         Shooter launcher = new Shooter(hardwareMap);
-        MotorSpeeds launchpower = MotorSpeeds.NEAR;
+        launchpower = 1200;
         setTargets();
         green = RevBlinkinLedDriver.BlinkinPattern.GREEN;
         red = RevBlinkinLedDriver.BlinkinPattern.RED;
@@ -68,10 +68,14 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
             if (!last_triangle && gamepad1.y) {
                 shooting = !shooting;
             }
+//            if (!shooting && drive.isAtPosition())
+//            {
+//                spinning up the flywheel when you're close to launch areas.
+//            }
             last_triangle = gamepad1.y;
             if (gamepad1.x) {
-                intake.spinIntake(0.675);
-                if (currentTime  - lastFeedToggleTime > feedPulseInterval) {
+//                intake.spinIntake(0.675);
+                if (Math.abs(launcher.getShooterVelocity() - launchpower) < 300) {
                     feeding = !feeding;
                     if (feeding) {
                         intake.spinIntake(0.7);
@@ -99,7 +103,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                 if (result == null) {
 
                 } else {
-                    joystick_rx = joystick_rx - Limelight.getTx() / 1.75;
+                    joystick_rx = joystick_rx - Limelight.getTx() / 2.5;
                     gamepad1.rumble(1000);
                     double range = Math.abs(result.getCameraPoseTargetSpace().getPosition().z);
                     // launchpower = 0.4 + range / 4;
@@ -114,7 +118,7 @@ public class SimpleFieldCentricDrive extends LinearOpMode {
                         }
                         else {
                             this.launchpower = 1800;
-                            feedPulseInterval = 0.15;
+                            feedPulseInterval = 0.2;
                         }
                         launcher.setShooterVelocityDynamic(this.launchpower);
                     } else {

@@ -190,14 +190,19 @@ public class driveallclass extends Subsystem {
     }
 
     public boolean isAtPosition(Location target) {
+        return isAtPosition(target, 15, 17.5);
+
+    }
+
+    public boolean isAtPosition(Location target, double toleranceXY, double toleranceAngle) {
         double currentX = poseEstimator.getGlobalX();
         double currentY = poseEstimator.getGlobalY();
         double currentHeading = poseEstimator.getHeading();
-        double tolerance = 15;
-        double turnTolerance = 17.5;
-        return Math.abs(currentX - target.Strafe) < tolerance &&
-                Math.abs(currentY - target.Forward) < tolerance &&
-                Math.abs(Math.toDegrees(currentHeading)-target.TurnDegrees) < turnTolerance;
+        toleranceXY = 15;
+        toleranceAngle = 17.5;
+        return Math.abs(currentX - target.Strafe) < toleranceXY &&
+                Math.abs(currentY - target.Forward) < toleranceXY &&
+                Math.abs(Math.toDegrees(currentHeading)-target.TurnDegrees) < toleranceAngle;
     }
 
     private Pose2d getCurrentPose() {

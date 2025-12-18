@@ -17,7 +17,7 @@ public class TimedShootCommand extends Command {
     double motorSpeed;
     private final double durationMs;
     private double startTime;
-    double feedPulseInterval = 0.1; //seconds for feed/pause
+    double feedPulseInterval = 25; //milliseconds for feed/pause
     double lastFeedToggleTime = 0;
     boolean feeding = false;
     double currentTime = 0;
@@ -28,7 +28,7 @@ public class TimedShootCommand extends Command {
         this.telemetry = telemetry;
         this.motorSpeed = motorSpeed;
         this.durationMs = durationSeconds * 1000;
-        addRequirements(this.shooter);
+        addRequirements(this.shooter, this.intake);
     }
 
     @Override
@@ -39,24 +39,24 @@ public class TimedShootCommand extends Command {
     }
     @Override
     public void execute() {
-        double elapsed = timer.milliseconds() - startTime;
+        currentTime = timer.milliseconds();
+        double elapsed = currentTime - startTime;
+
         servoGate.openGate();
         if (elapsed > 2000) {
             if (currentTime - lastFeedToggleTime > feedPulseInterval) {
                 feeding = !feeding;
                 if (feeding) {
-                    intake.spinIntake(0.7);
+                    intake.spinIntake(0.9);
                 } else{
                     intake.spinIntake(0);
                 }
                 lastFeedToggleTime = currentTime;
             }
-            servoGate.openGate();
-   //         intake.spinKicker(0.75);
         } else {
             intake.spinIntake(0);
     //        intake.spinKicker(0);
-            shooter.execute(true, motorSpeed);
+            shooter.setShooterVelocityDynamic(motorSpeed);
         }
         telemetry.addData("Running", "Shoot Command");
     }
